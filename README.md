@@ -418,3 +418,49 @@ const filterByPeoples = <T, U extends keyof T>(
 const filteredPeopleByName = filterByPeoples(users, "name", "Nahar");
 const filteredPeopleByAge = filterByPeoples(users, "age", 109);
 console.log(filteredPeopleByAge);
+```
+**Typescript With React**
+```typescript
+//Box.tsx
+import { ReactNode } from "react";
+
+type propsType = {
+  heading: string;
+  count?: number;
+  children: ReactNode;
+};
+
+const Box = ({ heading, count = 5, children }: propsType) => {
+  return (
+    <>
+      <h1>{heading}</h1>
+      {count && <p>{count}</p>}
+      {children}
+    </>
+  );
+};
+
+export default Box;
+
+//App.tsx
+import Box from "./components/Box";
+
+function App() {
+  return (
+    <>
+      <Box heading="Hello">
+        {"wow, nice"}
+      </Box>
+    </>
+  );
+}
+
+export default App;
+
+
+
+
+```
+
+
+
