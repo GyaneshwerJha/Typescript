@@ -456,11 +456,72 @@ function App() {
 }
 
 export default App;
-
-
-
-
 ```
+
+**Typescript With React Hook**
+```typescript
+// Box.tsx
+import { ThemeContext } from "../App";
+import { useContext } from "react";
+
+const Box = () => {
+  const { theme, toggleTheme } = useContext(ThemeContext);
+  alert(theme);
+  return (
+    <div
+      className="box-container"
+      style={{ backgroundColor: theme === "dark" ? "black" : "white" }}
+    >
+      <h1>Box 1</h1>
+      <button onClick={toggleTheme}>Change Theme</button>
+    </div>
+  );
+};
+
+export default Box;
+
+
+// App.tsx
+import { createContext, ReactNode, useState } from "react";
+import Box from "./components/Box";
+type ThemeType = "light" | "dark";
+
+interface ThemeContextType {
+  theme: ThemeType;
+  toggleTheme: () => void;
+}
+
+export const ThemeContext = createContext<ThemeContextType>({
+  theme: "light",
+  toggleTheme: () => {},
+});
+
+const ThemeProvider = ({ children }: { children: ReactNode }) => {
+  const [theme, setTheme] = useState<ThemeType>("light");
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
+};
+const App = () => {
+  return (
+    <ThemeProvider>
+      <div>Hellow</div>
+      <Box />
+    </ThemeProvider>
+  );
+};
+
+export default App;
+```
+
+
 
 
 
