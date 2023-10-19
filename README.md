@@ -520,8 +520,71 @@ const App = () => {
 
 export default App;
 ```
+**Typescript With Reducer**
+```typescript
+import { useReducer } from "react";
 
+type StateType = {
+  count: number;
+};
 
+type ActionType =
+  | {
+      type: "Increment";
+      payload: number;
+    }
+  | {
+      type: "Decrement";
+      payload: number;
+    };
+
+const reducer = (state: StateType, action: ActionType): StateType => {
+  switch (action.type) {
+    case "Increment":
+      return { count: state.count + 1 };
+      break;
+
+    case "Decrement":
+      return { count: state.count - 1 };
+      break;
+
+    default:
+      return state;
+  }
+};
+
+const initialState: StateType = {
+  count: 0,
+};
+
+const App = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const Increment = () => {
+    dispatch({
+      type: "Increment",
+      payload: 1,
+    });
+  };
+  const Decrement = () => {
+    dispatch({
+      type: "Decrement",
+      payload: 1,
+    });
+  };
+
+  return (
+    <div>
+      <h1>Count Change</h1>
+      <p>Count: {state.count}</p>
+
+      <button onClick={Increment}>+</button>
+      <button onClick={Decrement}>-</button>
+    </div>
+  );
+};
+export default App;
+```
 
 
 
